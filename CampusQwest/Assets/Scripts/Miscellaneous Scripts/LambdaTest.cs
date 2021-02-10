@@ -29,9 +29,9 @@ public class LambdaTest : MonoBehaviour
         
     }
 
-    private void TestLambda() 
+    private async void TestLambda() 
     {
-        AmazonLambdaClient LambdaClient = new AmazonLambdaClient(CognitoConfig.credentials, CognitoConfig.Region);
+        AmazonLambdaClient lambdaClient = new AmazonLambdaClient(CognitoConfig.credentials, CognitoConfig.Region);
 
         AddNumData addData = new AddNumData(2, 3);
         string payload = JsonConvert.SerializeObject(addData);
@@ -42,6 +42,6 @@ public class LambdaTest : MonoBehaviour
             Payload = payload
         };
 
-        InvokeResponse LambdaResponse = LambdaClient.Invoke(InvokeRequest);
+        InvokeResponse LambdaResponse = await lambdaClient.InvokeAsync(InvokeRequest);
     }
 }

@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Amazon.Extensions.CognitoAuthentication;
-using Amazon.CognitoIdentityProvider;
 
 public class LoginScene : MonoBehaviour
 {
@@ -15,8 +14,6 @@ public class LoginScene : MonoBehaviour
     public InputField PasswordField;
 
     public static string AccessToken { get; private set; }
-    public static AmazonCognitoIdentityProviderClient provider = 
-	    new AmazonCognitoIdentityProviderClient(new Amazon.Runtime.AnonymousAWSCredentials(), CognitoConfig.Region);
 
     private const string RegisterString = "Register";
     private const string HomeString = "Home";
@@ -36,8 +33,8 @@ public class LoginScene : MonoBehaviour
         string password = PasswordField.text;
 
         // Sets up the unsigned request to AWS's Cognito service for user
-        CognitoUserPool userPool = new CognitoUserPool(CognitoConfig.PoolID, CognitoConfig.AppClientID, provider);
-        CognitoUser user = new CognitoUser(username, CognitoConfig.AppClientID, userPool, provider);
+        CognitoUserPool userPool = new CognitoUserPool(CognitoConfig.PoolID, CognitoConfig.AppClientID, CognitoConfig.provider);
+        CognitoUser user = new CognitoUser(username, CognitoConfig.AppClientID, userPool, CognitoConfig.provider);
         InitiateSrpAuthRequest authRequest = new InitiateSrpAuthRequest(){ Password = password };
 
         try

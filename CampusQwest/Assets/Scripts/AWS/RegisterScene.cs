@@ -5,7 +5,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Amazon.CognitoIdentityProvider.Model;
-using Amazon.CognitoIdentityProvider;
 
 public class RegisterScene : MonoBehaviour
 {
@@ -15,9 +14,6 @@ public class RegisterScene : MonoBehaviour
     public InputField ConfirmField;
     public InputField EmailField;
 
-    public static AmazonCognitoIdentityProviderClient provider = 
-	    new AmazonCognitoIdentityProviderClient(new Amazon.Runtime.AnonymousAWSCredentials(), CognitoConfig.Region);
-
     private const string Login = "Login";
 
     // Start is called before the first frame update
@@ -26,6 +22,10 @@ public class RegisterScene : MonoBehaviour
         RegisterButton.onClick.AddListener(() => _ = Register());
     }
 
+    // TODO: Passwords should meet a length requirement
+    // If the password and confirmPassword fields are not equivalent,
+    // display a popup dialog
+    // Same thing if the email is not valid
     private async Task Register()
     {
         Debug.Log("Signup method called");
@@ -38,7 +38,7 @@ public class RegisterScene : MonoBehaviour
         try
         {
             ValidRegistration(password, confirmPassword, email);
-            SignUpResponse request = await provider.SignUpAsync(signUpRequest);
+            SignUpResponse request = await CognitoConfig.provider.SignUpAsync(signUpRequest);
             Debug.Log("Sign up was successful");
             SceneManager.LoadScene(Login);
         }
