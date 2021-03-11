@@ -19,6 +19,7 @@ obj/
 *.unityproj
 *.booproj
 .vs/*
+.idea/*
 
 ============
 OS generated
@@ -30,3 +31,4 @@ OS generated
 .Trashes
 ehthumbs.db
 Thumbs.db
+

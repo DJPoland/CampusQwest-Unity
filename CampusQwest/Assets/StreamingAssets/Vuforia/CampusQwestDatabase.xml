@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QCARConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="qcar_config.xsd">
+  <Tracking>
+    <ImageTarget name="Veterans_Plaque" size="0.300000 0.436191" />
+    <ImageTarget name="Union_Pegasus" size="5.000000 2.744344" />
+    <ImageTarget name="Alumni_Center_Sign" size="1.000000 0.645331" />
+    <ImageTarget name="google-logo" size="0.279400 0.157162" />
+  </Tracking>
+</QCARConfig>

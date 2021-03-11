@@ -1,0 +1,77 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 848409ee8ba454f42a5ddff137688a27, type: 3}
+  m_Name: ReferenceImageLibrary
+  m_EditorClassIdentifier: 
+  m_GuidLow: 5277765920197681629
+  m_GuidHigh: 1077094851030501053
+  m_Images:
+  - m_SerializedGuid:
+      m_GuidLow: 5000036127195625819
+      m_GuidHigh: 4097921075890409884
+    m_SerializedTextureGuid:
+      m_GuidLow: 11967421733276944427
+      m_GuidHigh: 11593730135944276235
+    m_Size: {x: 0.1, y: 0.1}
+    m_SpecifySize: 1
+    m_Name: baseball_bat
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 5107584014494652177
+      m_GuidHigh: 12859435126739731866
+    m_SerializedTextureGuid:
+      m_GuidLow: 13840840378096045973
+      m_GuidHigh: 11065302449196070392
+    m_Size: {x: 0.1, y: 0.09746589}
+    m_SpecifySize: 1
+    m_Name: instaTest
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 5257194839569758266
+      m_GuidHigh: 1831471417345857213
+    m_SerializedTextureGuid:
+      m_GuidLow: 14214567604109744999
+      m_GuidHigh: 4693479526947196889
+    m_Size: {x: 1, y: 0.5625}
+    m_SpecifySize: 1
+    m_Name: Spotify_Logo_RGB_Green
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 5259830618837094723
+      m_GuidHigh: 13669378792733257102
+    m_SerializedTextureGuid:
+      m_GuidLow: 9494987718237569360
+      m_GuidHigh: 11529624123121100760
+    m_Size: {x: 0.1, y: 0.10108933}
+    m_SpecifySize: 1
+    m_Name: thumbnail_image0
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 4777837659866712763
+      m_GuidHigh: 4138053946821773731
+    m_SerializedTextureGuid:
+      m_GuidLow: 6747625677643232514
+      m_GuidHigh: 4679901632010266763
+    m_Size: {x: 0.1, y: 0.096929826}
+    m_SpecifySize: 1
+    m_Name: thumbnail_image0 (1)
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 5456030287129930477
+      m_GuidHigh: 5158042634286814087
+    m_SerializedTextureGuid:
+      m_GuidLow: 11485352130066038390
+      m_GuidHigh: 680644313516840360
+    m_Size: {x: 0.1, y: 0.1}
+    m_SpecifySize: 1
+    m_Name: testerimage
+    m_Texture: {fileID: 0}
