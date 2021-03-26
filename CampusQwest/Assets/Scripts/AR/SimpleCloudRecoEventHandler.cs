@@ -7,6 +7,7 @@ public class SimpleCloudRecoEventHandler : MonoBehaviour
     private bool mIsScanning = false;
     private string mTargetMetadata = "";
     public ImageTargetBehaviour ImageTargetTemplate;
+    public static bool whenOpen = false;
 
     // Register cloud reco callbacks
     void Awake()
@@ -54,11 +55,14 @@ public class SimpleCloudRecoEventHandler : MonoBehaviour
         }
     }
 
-    // void Update()
-    // {
-    //     ObjectTracker tracker = TrackerManager.Instance.GetTracker<ObjectTracker>();
-
-    // }
+    void Update()
+    {
+        if(whenOpen){
+            mCloudRecoBehaviour.CloudRecoEnabled = true;
+            whenOpen = false;
+        }
+            
+    }
 
 
     // Here we handle a cloud target recognition event
@@ -87,6 +91,26 @@ public class SimpleCloudRecoEventHandler : MonoBehaviour
         else
         {
             GameObject.Find("TreasureChest1meter").transform.localScale = new Vector3(0, 0, 0);
+        }
+
+        // Hides the larger chests from being seen in the main camera view
+        if (mTargetMetadata == "TreasureChest01MeterWall")
+        {
+            GameObject.Find("TreasureChest01MeterWall").transform.localScale = new Vector3((float)0.2, (float)0.2, (float)0.2);
+        }
+        else
+        {
+            GameObject.Find("TreasureChest01MeterWall").transform.localScale = new Vector3(0, 0, 0);
+        }
+
+        // Hides the larger chests from being seen in the main camera view
+        if (mTargetMetadata == "TreasureChest01meter")
+        {
+            GameObject.Find("TreasureChest01meter").transform.localScale = new Vector3((float)0.1, (float)0.1, (float)0.1);
+        }
+        else
+        {
+            GameObject.Find("TreasureChest01meter").transform.localScale = new Vector3(0, 0, 0);
         }
 
 

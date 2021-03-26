@@ -9,30 +9,30 @@ using Amazon.CognitoIdentityProvider;
 
 public class RegisterScene : MonoBehaviour
 {
-    public Button RegisterButton;
-    public InputField UsernameField;
-    public InputField PasswordField;
-    public InputField ConfirmField;
-    public InputField EmailField;
-    public GameObject ErrorModal;
-    public Text ErrorText;
-
+    public Button registerButton;
+    public InputField usernameField;
+    public InputField passwordField;
+    public InputField confirmField;
+    public InputField emailField;
+    public GameObject errorModal;
+    public Text errorText;
+    public Dropdown dropdownCampus;
 
     private const string Login = "Login";
 
     // Start is called before the first frame update
     void Start()
     {
-        RegisterButton.onClick.AddListener(() => _ = Register());
+        registerButton.onClick.AddListener(() => _ = Register());
     }
 
     private async Task Register()
     {
         Debug.Log("Signup method called");
-        string username = UsernameField.text;
-        string password = PasswordField.text;
-        string confirmPassword = ConfirmField.text;
-        string email = EmailField.text;
+        string username = usernameField.text;
+        string password = passwordField.text;
+        string confirmPassword = confirmField.text;
+        string email = emailField.text;
 
         try
         {
@@ -46,8 +46,8 @@ public class RegisterScene : MonoBehaviour
         catch (Exception e)
         {
             Debug.Log("Exception during registration: " + e);
-            ErrorText.text = "Something went wrong...";
-            ErrorModal.SetActive(true);
+            errorText.text = "Something went wrong...";
+            errorModal.SetActive(true);
             return;
         }
     }
@@ -57,15 +57,15 @@ public class RegisterScene : MonoBehaviour
         if (password != confirmPassword)
         {
             Debug.LogError("Password and confirm password fields are invalid");
-            ErrorText.text = "Password and confirm password fields are invalid!";
-            ErrorModal.SetActive(true);
+            errorText.text = "Password and confirm password fields are invalid!";
+            errorModal.SetActive(true);
             throw new Exception("Invalid Registration");
         }
 
         if (!Validator.EmailIsValid(email)) {
             Debug.LogError("Email format is invalid");
-            ErrorText.text = "Email format is invalid!";
-            ErrorModal.SetActive(true);
+            errorText.text = "Email format is invalid!";
+            errorModal.SetActive(true);
             throw new Exception("Invalid Registration");
         }
     }
@@ -78,9 +78,11 @@ public class RegisterScene : MonoBehaviour
 	        Username = username, 
 	        Password = password 
 	    };
+        string campusValue = dropdownCampus.options[dropdownCampus.value].text;
         var attributes = new List<AttributeType>()
         {
-			new AttributeType() { Name = "email", Value = email }
+			new AttributeType() { Name = "email", Value = email },
+            new AttributeType() { Name = "custom:campus", Value = campusValue }
         };
         signUpRequest.UserAttributes = attributes;
         return signUpRequest;

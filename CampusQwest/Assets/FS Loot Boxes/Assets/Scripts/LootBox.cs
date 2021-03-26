@@ -157,6 +157,10 @@ public class LootBox : MonoBehaviour
         // calls the OnBoxOpen event and deliver the
         // earned GameObjects on temp list
         OnBoxOpen?.Invoke(loots.ToArray());
+
+        // Restarts the cloud scan
+        SimpleCloudRecoEventHandler.whenOpen = true;
+
     }
 
     /// <summary>

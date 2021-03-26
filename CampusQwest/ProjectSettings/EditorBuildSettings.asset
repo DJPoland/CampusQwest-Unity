@@ -7,7 +7,7 @@ EditorBuildSettings:
   m_Scenes:
   - enabled: 1
     path: Assets/Scenes/Pre-Login/Login.unity
-    guid: 2d0d32ac33c7a524e833680267a144ca
+    guid: 086a64e7b985a4c8f8c55114d9ca92e9
   - enabled: 1
     path: Assets/Scenes/Pre-Login/Register.unity
     guid: c794c2633ce3c0446abe296b9f6f2294

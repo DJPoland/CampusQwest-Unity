@@ -11,7 +11,6 @@ public class LoginScene : MonoBehaviour
 {
     public Button LoginButton;
     public Button RegisterButton;
-    public Button ForgotPasswordTextButton;
     public InputField UsernameField;
     public InputField PasswordField;
     public GameObject ErrorModal;
@@ -45,7 +44,6 @@ public class LoginScene : MonoBehaviour
             var authResponse = await user.StartWithSrpAuthAsync(authRequest).ConfigureAwait(true);
             IdToken = authResponse.AuthenticationResult.IdToken;
             AccessToken = authResponse.AuthenticationResult.AccessToken;
-            Debug.Log("User Access Token: " + IdToken);
             CognitoConfig.credentials.AddLogin(CognitoConfig.UserPoolProvider, IdToken);
             SceneManager.LoadScene(HomeString);
         }

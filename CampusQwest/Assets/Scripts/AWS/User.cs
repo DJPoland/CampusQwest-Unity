@@ -1,13 +1,9 @@
-﻿using System.Collections.Generic;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 // Some of these fields should be required or else there's an error going on. 
 // Looks like we may need to import another package for this guarantee.
 public class User
 {
-    [JsonProperty("badges")]
-    public string[] Badges { get; set; }
-
     [JsonProperty("campus")]
     public string Campus { get; set; }
 
@@ -24,7 +20,7 @@ public class User
     public QwestsCompleted[] QwestsCompleted { get; set; }
 
     [JsonProperty("rank")]
-    public long Rank { get; set; }
+    public string Rank { get; set; }
 
     [JsonProperty("selectedAvatar")]
     public long SelectedAvatar { get; set; }
@@ -33,8 +29,11 @@ public class User
     public long SelectedBanner { get; set; }
 
     [JsonProperty("trophies")]
-    public object[] Trophies { get; set; }
+    public bool[] unlockedTrophies { get; set; }
 
+    [JsonProperty("medals")]
+    public bool[] unlockedMedals { get; set; }
+    
     [JsonProperty("username")]
     public string Username { get; set; }
 }

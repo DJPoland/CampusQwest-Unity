@@ -2727,7 +2727,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 1257457528}
   m_Template: {fileID: 795004711}
   m_CaptionText: {fileID: 1499425468}
@@ -3920,13 +3920,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0db8fc1d09cf8b140a623accaf8e8f18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RegisterButton: {fileID: 83970177}
-  UsernameField: {fileID: 321807816}
-  PasswordField: {fileID: 295070080}
-  ConfirmField: {fileID: 324997049}
-  EmailField: {fileID: 1443806689}
-  ErrorModal: {fileID: 1773452695}
-  ErrorText: {fileID: 465524091}
+  registerButton: {fileID: 83970177}
+  usernameField: {fileID: 321807816}
+  passwordField: {fileID: 295070080}
+  confirmField: {fileID: 324997049}
+  emailField: {fileID: 1443806689}
+  errorModal: {fileID: 1773452695}
+  errorText: {fileID: 465524091}
+  dropdownCampus: {fileID: 1257457527}
 --- !u!4 &2090117791
 Transform:
   m_ObjectHideFlags: 0

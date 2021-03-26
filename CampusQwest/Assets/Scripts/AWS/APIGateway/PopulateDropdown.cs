@@ -5,50 +5,68 @@ using UnityEngine.UI;
 
 public class PopulateDropdown : MonoBehaviour
 {
-    private List<string> m_DropOptions = new List<string>();
-    private List<string> indexToClue = new List<string>();
-    private List<Qwest> qwests;
-    private bool UpdatedHome = false;
+    private readonly List<string> _mDropOptions = new List<string>();
+    private readonly List<string> _indexToClue = new List<string>();
+    private List<Qwest> _qwests;
+    private HashSet<long> _completedQwests;
+    private User _user;
+    private bool _updatedHome = false;
 
 
-    public Dropdown m_Dropdown;
+    public Dropdown mDropdown;
     public Text clueText;
 
     void Start()
     {
-        m_Dropdown.onValueChanged.AddListener(delegate
+        mDropdown.onValueChanged.AddListener(delegate
         {
-            UpdateScrollText(m_Dropdown);
+            UpdateScrollText(mDropdown);
         });
     }
 
     void Update()
     {
-        if (qwests == null)
+        if (_user == null)
         {
-            qwests = APIGatewayController.GETUserQwests();
+            _user = APIGatewayController.GETUserData();
         }
-        else if (!UpdatedHome)
+        else if (_qwests == null)
         {
+            _qwests = APIGatewayController.GETUserQwests();
+        }
+        else if (!_updatedHome)
+        {
+            _completedQwests = new HashSet<long>();
+            foreach (QwestsCompleted completed in _user.QwestsCompleted)
+            {
+                _completedQwests.Add(completed.QwestId);
+            }
+
             CreateDropdown();
-            clueText.text = indexToClue[0];
-            UpdatedHome = true;
+            clueText.text = _indexToClue[0];
+            _updatedHome = true;
         }
+        
     }
 
+    // Create list to select Qwests from and remove Qwests a User has already finished
     private void CreateDropdown()
     {
-        for (int i = 0; i < qwests.Count; i++)
+        for (int i = 0; i < _qwests.Count; i++)
         {
-            m_DropOptions.Add(qwests[i].Name);
-            indexToClue.Add(qwests[i].Locations[i].Clue);
+            Debug.Log(_qwests[i].Name);
+            if (!_completedQwests.Contains(_qwests[i].Id))
+            {
+                _mDropOptions.Add(_qwests[i].Name);
+                _indexToClue.Add(_qwests[i].Locations[0].Clue);
+            }
         }
-        m_Dropdown.ClearOptions();
-        m_Dropdown.AddOptions(m_DropOptions);
+        mDropdown.ClearOptions();
+        mDropdown.AddOptions(_mDropOptions);
     }
 
     private void UpdateScrollText(Dropdown change)
     {
-        clueText.text = indexToClue[change.value];
+        clueText.text = _indexToClue[change.value];
     }
 }
