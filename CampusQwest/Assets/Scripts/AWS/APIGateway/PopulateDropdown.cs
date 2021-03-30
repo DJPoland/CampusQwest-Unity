@@ -12,6 +12,7 @@ public class PopulateDropdown : MonoBehaviour
     private HashSet<long> _completedQwests;
     private User _user;
     private bool _updatedHome = false;
+    private bool _setQwest = false;
 
     public Dropdown mDropdown;
     public Text popUpText;
@@ -38,27 +39,28 @@ public class PopulateDropdown : MonoBehaviour
         {
             _qwests = APIGatewayController.GETUserQwests();
         }
-        else if (!_updatedHome)
+        else if (_user.CurrentQwest.QwestId != 0)
         {
-            // Hacky way of checking if currentQwest is not null or not {}
-            if (!string.IsNullOrEmpty(_user.CurrentQwest.TimeStarted))
+            if (_setQwest == false)
             {
+                QwestProcess.SetQwestInfo();
                 _updatedHome = true;
-                gameObject.SetActive(false);                
-            }
-            else
-            {
-                _completedQwests = new HashSet<long>();
-                foreach (QwestsCompleted completed in _user.QwestsCompleted)
-                {
-                    _completedQwests.Add(completed.QwestId);
-                }
-
-                CreateDropdown();
-                _updatedHome = true;
+                gameObject.SetActive(false); // Which is this for?
+                mDropdown.interactable = false; 
             }
         }
-        
+        else if (!_updatedHome)
+        {
+            Debug.Log("Entered Dropdown");
+            _completedQwests = new HashSet<long>();
+            foreach (QwestsCompleted completed in _user.QwestsCompleted)
+            {
+                _completedQwests.Add(completed.QwestId);
+            }
+
+            CreateDropdown();
+            _updatedHome = true;
+        }
     }
 
     // Create list to select Qwests from and remove Qwests a User has already finished

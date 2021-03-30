@@ -59,6 +59,7 @@ public class SimpleCloudRecoEventHandler : MonoBehaviour
     {
         if(whenOpen){
             mCloudRecoBehaviour.CloudRecoEnabled = true;
+            //QwestProcess.GetNextLocation();
             whenOpen = false;
         }
             
@@ -73,9 +74,9 @@ public class SimpleCloudRecoEventHandler : MonoBehaviour
         // do something with the target metadata
         mTargetMetadata = cloudRecoSearchResult.MetaData;
 
-        // Save this statement for whenever we get database data and insert(where google-logo is) the current image that the user is trying to detect.
-        // if(cloudRecoSearchResult.TargetName != "google-logo")
-        //     return;
+        //  the current image that the user is trying to detect.
+         if(QwestProcess.GETLocationImage() == null || cloudRecoSearchResult.TargetName != QwestProcess.GETLocationImage())
+             return;
 
 
         // stop the target finder (i.e. stop scanning the cloud)
@@ -125,6 +126,7 @@ public class SimpleCloudRecoEventHandler : MonoBehaviour
 
     }
 
+    // This function is strictly used for debugging. Turns on options to reset scanner for Vuforia
     // void OnGUI()
     // {
     //     // Display current 'scanning' status

@@ -28,6 +28,7 @@ public class APIGatewayController : MonoBehaviour
     }
     
     void Awake() { 
+
         if (_instance == null) {
             DontDestroyOnLoad(gameObject);
             _instance = this;
@@ -35,6 +36,11 @@ public class APIGatewayController : MonoBehaviour
         {
             Destroy(gameObject);
 		}
+    }
+
+    public static void ResetAPIControllerInstance()
+    {
+        APIGatewayController._instance = null;
     }
 
     private static IEnumerator GetQwests(string uri)
@@ -78,5 +84,22 @@ public class APIGatewayController : MonoBehaviour
     public static List<Leaderboard> GETLeaderboardData()
     {
         return _instance != null && _instance._leaderboardData != null ? _instance._leaderboardData : null;
+    }
+
+    public static Qwest GETQwestById(long Id)
+    {
+        if (_instance == null && _instance._qwests == null)
+        {
+            return null;
+        }
+
+        foreach (Qwest qwest in _instance._qwests)
+        {
+            if (Id == qwest.Id)
+            {
+                return qwest;
+            }
+        }
+        return null;
     }
 }

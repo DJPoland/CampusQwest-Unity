@@ -11,7 +11,8 @@ public class DisplayProfileData : MonoBehaviour
     public Text rank;
     public Image[] trophies;
     public Image[] medals;
-    // Start is called before the first frame update
+    public Image avatar;
+
     void Update()
     {
         if (_userData == null) {
@@ -25,6 +26,9 @@ public class DisplayProfileData : MonoBehaviour
             rank.text = _userData.Rank;
             ShowUnlockedTrophies();
             ShowUnlockedMedals();
+
+            var selectedSprite = Resources.Load<Sprite>("Images/Avatars/avatar" + _userData.SelectedAvatar);
+            avatar.sprite = selectedSprite;
 
             _updatedUserData = true;
 		}

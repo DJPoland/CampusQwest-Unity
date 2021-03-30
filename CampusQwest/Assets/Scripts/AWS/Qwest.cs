@@ -33,10 +33,10 @@ public partial class Location
     public string Clue { get; set; }
 
     [JsonProperty("latitude")]
-    public long Latitude { get; set; }
+    public float Latitude { get; set; }
 
     [JsonProperty("longitude")]
-    public long Longitude { get; set; }
+    public float Longitude { get; set; }
 
     [JsonProperty("name")]
     public string Name { get; set; }

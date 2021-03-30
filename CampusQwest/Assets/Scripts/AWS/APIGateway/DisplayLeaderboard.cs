@@ -71,6 +71,18 @@ public class DisplayLeaderboard : MonoBehaviour
             Debug.LogError("Error with updating leaderboard: " + e);
         }
     }
+   
+    // Converts seconds to Hours:Minutes:Seconds
+    private string ConvertSecondsToHms(string totalTime)
+    {
+        int secondsInt = int.Parse(totalTime);
+
+        int seconds = secondsInt % 60;
+        int minutes = secondsInt / 60;
+        int hours = secondsInt / (60 * 60);
+
+        return hours + ":" + minutes + ":" + seconds;
+    }
 
     private void CreateUsersForQwest()
     {
@@ -90,7 +102,7 @@ public class DisplayLeaderboard : MonoBehaviour
             var selectedSprite = Resources.Load<Sprite>("Images/Avatars/avatar" + selectedAvatar);
             
             usernameText.text = user;
-            scoreText.text = totalTime;
+            scoreText.text = ConvertSecondsToHms(totalTime);
             profileImageComponent.sprite = selectedSprite;
             
             var positionX = userPanelObj.transform.position.x;

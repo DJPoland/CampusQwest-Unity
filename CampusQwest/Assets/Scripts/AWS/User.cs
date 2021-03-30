@@ -23,10 +23,10 @@ public class User
     public string Rank { get; set; }
 
     [JsonProperty("selectedAvatar")]
-    public long SelectedAvatar { get; set; }
+    public int SelectedAvatar { get; set; }
 
     [JsonProperty("selectedBanner")]
-    public long SelectedBanner { get; set; }
+    public int SelectedBanner { get; set; }
 
     [JsonProperty("trophies")]
     public bool[] unlockedTrophies { get; set; }

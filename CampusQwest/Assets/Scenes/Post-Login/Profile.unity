@@ -1053,6 +1053,7 @@ MonoBehaviour:
   - {fileID: 1410196397}
   - {fileID: 860489935}
   - {fileID: 1915723441}
+  avatar: {fileID: 1204439591}
 --- !u!1 &255363837
 GameObject:
   m_ObjectHideFlags: 0
