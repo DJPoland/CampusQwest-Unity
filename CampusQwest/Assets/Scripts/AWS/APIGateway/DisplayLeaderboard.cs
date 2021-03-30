@@ -1,14 +1,19 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using Newtonsoft.Json;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.UI;
 
 public class DisplayLeaderboard : MonoBehaviour
 {
-    private List<Leaderboard> _leaderboardData;
+    private const string URL = "https://0kc0gke4s2.execute-api.us-east-1.amazonaws.com";
+    private static List<Leaderboard> _leaderboardData;
     private bool _updatedLeaderboard;
-    private List<GameObject> _gameObjectCache = new List<GameObject>();
+    private readonly List<GameObject> _gameObjectCache = new List<GameObject>();
 
     public GameObject playerObjectSchema;
     public Dropdown qwestDropdown;
@@ -17,6 +22,8 @@ public class DisplayLeaderboard : MonoBehaviour
 
     void Start()
     {
+        qwestDropdown.value = 0;
+        StartCoroutine(GetLeaderboardsForQwests("/leaderboard", 1));
         qwestDropdown.onValueChanged.AddListener(delegate
         {
             UpdateLeaderboard(qwestDropdown);
@@ -26,17 +33,11 @@ public class DisplayLeaderboard : MonoBehaviour
     void Update()
     {
         
-        if (_leaderboardData == null)
-        {
-            
-            _leaderboardData = APIGatewayController.GETLeaderboardData();
-            
-        } 
-        else if (!_updatedLeaderboard)
+        if (!_updatedLeaderboard && _leaderboardData != null)
         {
             Debug.Log("Leaderboard being created");
            
-            CreateUsersForQwest(1);
+            CreateUsersForQwest();
         
             _updatedLeaderboard = true;
         }
@@ -56,7 +57,10 @@ public class DisplayLeaderboard : MonoBehaviour
 
             Debug.Log(change.value + 1);
 
-            CreateUsersForQwest(change.value + 1);
+            _leaderboardData = null;
+            _updatedLeaderboard = false;
+            
+            StartCoroutine(GetLeaderboardsForQwests("/leaderboard", change.value + 1));
         }
         catch (InvalidOperationException e)
         {
@@ -68,11 +72,11 @@ public class DisplayLeaderboard : MonoBehaviour
         }
     }
 
-    private void CreateUsersForQwest(int qwestId)
+    private void CreateUsersForQwest()
     {
-        var selectedLeaderboard = _leaderboardData.First(leaderboard => leaderboard.QwestId == qwestId);
+        var selectedLeaderboard = _leaderboardData;
         float positionY = playerObjectSchema.transform.position.y;
-        foreach (var userMetadata in selectedLeaderboard.MetadataUsers)
+        foreach (var userMetadata in selectedLeaderboard)
         {
             var user = userMetadata.Username;
             var totalTime = userMetadata.TotalTime;
@@ -96,6 +100,22 @@ public class DisplayLeaderboard : MonoBehaviour
             
             userPanelObj.SetActive(true);
             _gameObjectCache.Add(userPanelObj);
+        }
+    }
+    
+    private static IEnumerator GetLeaderboardsForQwests(string uri, int qwestId)
+    {
+        var jsonString = "{\"qwestId\":" + qwestId +"}";
+        using (UnityWebRequest www = UnityWebRequest.Post(URL + uri, jsonString))
+        {
+            // Request with user information and wait for data.
+            www.SetRequestHeader("Content-Type", "application/json");
+            yield return www.SendWebRequest();
+
+            var result = www.downloadHandler.text;
+            Debug.Log(result);
+
+            _leaderboardData = JsonConvert.DeserializeObject<List<Leaderboard>>(result);
         }
     }
 }

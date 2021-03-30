@@ -44,6 +44,9 @@ public class LoginScene : MonoBehaviour
             var authResponse = await user.StartWithSrpAuthAsync(authRequest).ConfigureAwait(true);
             IdToken = authResponse.AuthenticationResult.IdToken;
             AccessToken = authResponse.AuthenticationResult.AccessToken;
+            
+            Debug.Log("User signed in with AccessToken: " + AccessToken);
+            
             CognitoConfig.credentials.AddLogin(CognitoConfig.UserPoolProvider, IdToken);
             SceneManager.LoadScene(HomeString);
         }

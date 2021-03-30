@@ -9,7 +9,6 @@ public class APIGatewayController : MonoBehaviour
 {
     private const string URL = "https://0kc0gke4s2.execute-api.us-east-1.amazonaws.com";
     private static APIGatewayController _instance;
-    
     private User _userData;
     private List<Qwest> _qwests;
     private List<Leaderboard> _leaderboardData;
@@ -19,7 +18,6 @@ public class APIGatewayController : MonoBehaviour
         // Requests that are made at user startup
         try
         {
-            StartCoroutine(GetLeaderboardsForQwests("/leaderboard"));
             StartCoroutine(GetUserData("/user"));
             StartCoroutine(GetQwests("/user/qwests/fetchQwests"));
         }
@@ -68,19 +66,6 @@ public class APIGatewayController : MonoBehaviour
         }
     }
 
-    private static IEnumerator GetLeaderboardsForQwests(string uri)
-    {
-        using (UnityWebRequest www = UnityWebRequest.Get(URL + uri))
-        {
-            // Request with user information and wait for data.
-            yield return www.SendWebRequest();
-
-            var result = www.downloadHandler.text;
-            Debug.Log(result);
-
-            _instance._leaderboardData = JsonConvert.DeserializeObject<List<Leaderboard>>(result);
-        }
-    }
 
     public static User GETUserData() {
         return _instance != null && _instance._userData != null ? _instance._userData : null;

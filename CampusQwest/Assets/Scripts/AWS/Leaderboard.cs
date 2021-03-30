@@ -7,14 +7,6 @@ public class Leaderboard
     [JsonProperty("qwestId")]
     public long QwestId { get; set; }
     
-    // Make this ascending
-    [JsonProperty("leaderboard")]
-    public LeaderboardMetadata[] MetadataUsers { get; set; }
-    
-}
-
-public partial class LeaderboardMetadata
-{
     [JsonProperty("totalTime")] 
     public string TotalTime { get; set; }
     
@@ -23,6 +15,5 @@ public partial class LeaderboardMetadata
     
     [JsonProperty("selectedAvatar")]
     public string SelectedAvatar { get; set; }
+    
 }
-
-

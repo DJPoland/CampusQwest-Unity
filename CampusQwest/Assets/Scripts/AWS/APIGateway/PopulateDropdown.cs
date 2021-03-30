@@ -1,25 +1,29 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine.UI;
 
 
 public class PopulateDropdown : MonoBehaviour
 {
     private readonly List<string> _mDropOptions = new List<string>();
-    private readonly List<string> _indexToClue = new List<string>();
+    private readonly List<Qwest> _availableQwests = new List<Qwest>();
     private List<Qwest> _qwests;
     private HashSet<long> _completedQwests;
     private User _user;
     private bool _updatedHome = false;
 
-
     public Dropdown mDropdown;
-    public Text clueText;
+    public Text popUpText;
+    public Button SubmitButton;
+    public GameObject mPopUp;
 
     void Start()
     {
+        mDropdown.value = -1;
         mDropdown.onValueChanged.AddListener(delegate
         {
+            Debug.Log("clicked!");
             UpdateScrollText(mDropdown);
         });
     }
@@ -36,15 +40,23 @@ public class PopulateDropdown : MonoBehaviour
         }
         else if (!_updatedHome)
         {
-            _completedQwests = new HashSet<long>();
-            foreach (QwestsCompleted completed in _user.QwestsCompleted)
+            // Hacky way of checking if currentQwest is not null or not {}
+            if (!string.IsNullOrEmpty(_user.CurrentQwest.TimeStarted))
             {
-                _completedQwests.Add(completed.QwestId);
+                _updatedHome = true;
+                gameObject.SetActive(false);                
             }
+            else
+            {
+                _completedQwests = new HashSet<long>();
+                foreach (QwestsCompleted completed in _user.QwestsCompleted)
+                {
+                    _completedQwests.Add(completed.QwestId);
+                }
 
-            CreateDropdown();
-            clueText.text = _indexToClue[0];
-            _updatedHome = true;
+                CreateDropdown();
+                _updatedHome = true;
+            }
         }
         
     }
@@ -52,21 +64,27 @@ public class PopulateDropdown : MonoBehaviour
     // Create list to select Qwests from and remove Qwests a User has already finished
     private void CreateDropdown()
     {
-        for (int i = 0; i < _qwests.Count; i++)
+        foreach (var qwest in _qwests)
         {
-            Debug.Log(_qwests[i].Name);
-            if (!_completedQwests.Contains(_qwests[i].Id))
-            {
-                _mDropOptions.Add(_qwests[i].Name);
-                _indexToClue.Add(_qwests[i].Locations[0].Clue);
-            }
+            Debug.Log(qwest.Name);
+            if (_completedQwests.Contains(qwest.Id)) continue;
+            
+            _mDropOptions.Add(qwest.Name);
+            _availableQwests.Add(qwest);
         }
-        mDropdown.ClearOptions();
         mDropdown.AddOptions(_mDropOptions);
+    }
+
+    private void LockSelecting()
+    {
+        
     }
 
     private void UpdateScrollText(Dropdown change)
     {
-        clueText.text = _indexToClue[change.value];
+        Debug.Log("Executed!");
+        popUpText.text = "Do you wish to start this Qwest? \n\n" + _mDropOptions[change.value] + "\n\n You need to finish or abandon this Qwest to start a new one";
+        SubmitButton.onClick.AddListener(() => StartCoroutine(QwestProcess.PostStartQwest("/user/qwests/startQwest", (int) _availableQwests[change.value].Id)));
+        mPopUp.SetActive(true);
     }
 }
